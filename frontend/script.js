@@ -7,8 +7,7 @@ if(!guestName || !message){
 alert("กรุณากรอกชื่อและคำอวยพร")
 return
 }
-
-const res = await fetch("http://localhost:5000/api/wishes",{
+const res = await fetch("https://wedding007-production.up.railway.app/api/wishes",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
