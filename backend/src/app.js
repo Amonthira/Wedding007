@@ -16,4 +16,15 @@ app.get('/', (req, res) => {
 
 app.use('/api/wishes', wishRoutes);
 
+
+// ⭐ IMPORTANT ERROR HANDLER
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR:", err);
+
+  res.status(500).json({
+    success: false,
+    message: err.message || "Server crash"
+  });
+});
+
 module.exports = app;
