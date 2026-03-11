@@ -1,12 +1,8 @@
 const Wish = require('../models/Wish');
 
-
-// ================= CREATE WISH =================
 const createWish = async (req, res) => {
   try {
-
-    console.log("POST /api/wishes called");
-    console.log("BODY:", req.body);
+    console.log("POST /api/wishes");
 
     let { guestName, message } = req.body;
 
@@ -20,36 +16,19 @@ const createWish = async (req, res) => {
       });
     }
 
-    if (guestName.length > 80) {
-      return res.status(400).json({
-        success: false,
-        message: 'Guest name must not exceed 80 characters',
-      });
-    }
-
-    if (message.length > 500) {
-      return res.status(400).json({
-        success: false,
-        message: 'Message must not exceed 500 characters',
-      });
-    }
-
     const newWish = await Wish.create({
       guestName,
       message,
     });
 
-    console.log("Wish created:", newWish);
-
     return res.status(201).json({
       success: true,
-      message: 'Wish submitted successfully',
       data: newWish,
     });
 
   } catch (error) {
 
-    console.error("CREATE WISH ERROR:", error);
+    console.log("CREATE ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -58,26 +37,23 @@ const createWish = async (req, res) => {
   }
 };
 
-
-// ================= GET WISHES =================
 const getWishes = async (req, res) => {
   try {
 
-    console.log("GET /api/wishes called");
+    console.log("GET /api/wishes");
 
     const wishes = await Wish.find().sort({ createdAt: -1 });
 
-    console.log("Wish count:", wishes.length);
+    console.log("FOUND:", wishes.length);
 
-    return res.status(200).json({
+    return res.json({
       success: true,
-      count: wishes.length,
       data: wishes,
     });
 
   } catch (error) {
 
-    console.error("GET WISHES ERROR:", error);
+    console.log("GET ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -85,7 +61,6 @@ const getWishes = async (req, res) => {
     });
   }
 };
-
 
 module.exports = {
   createWish,
