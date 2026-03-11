@@ -10,8 +10,8 @@ const startServer = async () => {
 
     const PORT = process.env.PORT || 8080;
 
-    app.listen(PORT, () => {
-      console.log("✅ SERVER STARTED ON PORT:", PORT);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log("🚀 SERVER RUNNING ON PORT:", PORT);
     });
 
   } catch (err) {
