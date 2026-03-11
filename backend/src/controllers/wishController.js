@@ -1,7 +1,13 @@
 const Wish = require('../models/Wish');
 
+
+// ================= CREATE WISH =================
 const createWish = async (req, res) => {
   try {
+
+    console.log("POST /api/wishes called");
+    console.log("BODY:", req.body);
+
     let { guestName, message } = req.body;
 
     guestName = guestName?.trim();
@@ -33,37 +39,53 @@ const createWish = async (req, res) => {
       message,
     });
 
+    console.log("Wish created:", newWish);
+
     return res.status(201).json({
       success: true,
       message: 'Wish submitted successfully',
       data: newWish,
     });
+
   } catch (error) {
+
+    console.error("CREATE WISH ERROR:", error);
+
     return res.status(500).json({
       success: false,
-      message: 'Server error',
-      error: error.message,
+      message: error.message,
     });
   }
 };
 
+
+// ================= GET WISHES =================
 const getWishes = async (req, res) => {
   try {
+
+    console.log("GET /api/wishes called");
+
     const wishes = await Wish.find().sort({ createdAt: -1 });
+
+    console.log("Wish count:", wishes.length);
 
     return res.status(200).json({
       success: true,
       count: wishes.length,
       data: wishes,
     });
+
   } catch (error) {
+
+    console.error("GET WISHES ERROR:", error);
+
     return res.status(500).json({
       success: false,
-      message: 'Server error',
-      error: error.message,
+      message: error.message,
     });
   }
 };
+
 
 module.exports = {
   createWish,
