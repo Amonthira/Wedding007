@@ -27,91 +27,42 @@ Girl & Man
 
 <script>
 
-let wishes=[]
-let index=0
+let wishes = []
+let index = 0
 
 async function loadWishes(){
 
-const res = await fetch("async function sendWish(){
+  const res = await fetch("https://wedding007-production.up.railway.app/api/wishes")
+  const data = await res.json()
 
-const guestName = document.getElementById("name").value
-const message = document.getElementById("message").value
-
-if(!guestName || !message){
-alert("กรุณากรอกชื่อและคำอวยพร")
-return
-}
-const res = await fetch("https://wedding007-production.up.railway.app/api/wishes",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-guestName,
-message
-})
-})
-
-const data = await res.json()
-
-if(data.success){
-
-document.querySelector(".card").innerHTML = `
-<h1> ขอบคุณทุกคนที่มาร่วมแสดงยินดี</h1>
-
-<p style="font-size:18px;margin-top:20px;">
-ขอบคุณมากที่มาร่วมแสดงความยินดีกับพวกเรา
-</p>
-
-<p style="margin-top:10px;">
-ขอให้ทุกท่านมีความสุขในงานแต่งของเรา ❤️
-</p>
-
-<button onclick="writeAgain()" class="again-btn">
-พิมพ์คำอวยพรอีกครั้ง
-</button>
-`
-
-}else{
-document.getElementById("status").innerText=data.message
-}
-
-}
-
-
-function writeAgain(){
-location.reload()
-}")
-const data = await res.json()
-
-wishes = data.data
+  wishes = data.data
 
 }
 
 function showWish(){
 
-if(wishes.length===0)return
+  if(wishes.length === 0) return
 
-const box = document.getElementById("wishBox")
+  const box = document.getElementById("wishBox")
 
-box.style.opacity = 0
+  box.style.opacity = 0
 
-setTimeout(()=>{
+  setTimeout(()=>{
 
-const wish = wishes[index]
+    const wish = wishes[index]
 
-document.getElementById("wishMessage").innerText = wish.message
-document.getElementById("wishName").innerText = "- " + wish.guestName
+    document.getElementById("wishMessage").innerText = wish.message
+    document.getElementById("wishName").innerText = "- " + wish.guestName
 
-box.style.opacity = 1
+    box.style.opacity = 1
 
-index++
+    index++
 
-if(index>=wishes.length){
-index=0
-}
+    if(index >= wishes.length){
+      index = 0
+    }
 
-},800)
+  },800)
 
 }
 
