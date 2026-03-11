@@ -14,10 +14,19 @@ app.get('/', (req, res) => {
   });
 });
 
+// ⭐ ROUTES
 app.use('/api/wishes', wishRoutes);
 
+// ⭐ DEBUG ROUTE (วางตรงนี้)
+app.get('/api/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'API WORKING 100%'
+  });
+});
 
-// ⭐ IMPORTANT ERROR HANDLER
+
+// ⭐ GLOBAL ERROR HANDLER (ต้องอยู่ล่างสุดเสมอ)
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:", err);
 
