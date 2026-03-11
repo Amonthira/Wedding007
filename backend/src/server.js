@@ -3,7 +3,7 @@ require('dotenv').config();
 const app = require('./app');
 const connectDB = require('./config/db');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 const startServer = async () => {
   try {
@@ -14,7 +14,7 @@ const startServer = async () => {
     });
 
   } catch (err) {
-    console.error(err);
+    console.error("SERVER START ERROR:", err);
   }
 };
 
