@@ -1,66 +1,42 @@
 const Wish = require('../models/Wish');
+const asyncHandler = require('../utils/asyncHandler');
 
-const createWish = async (req, res) => {
-  try {
-    console.log("POST /api/wishes");
+const createWish = asyncHandler(async (req, res) => {
 
-    let { guestName, message } = req.body;
+  let { guestName, message } = req.body;
 
-    guestName = guestName?.trim();
-    message = message?.trim();
+  guestName = guestName?.trim();
+  message = message?.trim();
 
-    if (!guestName || !message) {
-      return res.status(400).json({
-        success: false,
-        message: 'Guest name and message are required',
-      });
-    }
-
-    const newWish = await Wish.create({
-      guestName,
-      message,
-    });
-
-    return res.status(201).json({
-      success: true,
-      data: newWish,
-    });
-
-  } catch (error) {
-
-    console.log("CREATE ERROR:", error);
-
-    return res.status(500).json({
+  if (!guestName || !message) {
+    return res.status(400).json({
       success: false,
-      message: error.message,
+      message: 'Guest name and message are required',
     });
   }
-};
 
-const getWishes = async (req, res) => {
-  try {
+  const newWish = await Wish.create({
+    guestName,
+    message,
+  });
 
-    console.log("GET /api/wishes");
+  res.status(201).json({
+    success: true,
+    data: newWish,
+  });
 
-    const wishes = await Wish.find().sort({ createdAt: -1 });
+});
 
-    console.log("FOUND:", wishes.length);
+const getWishes = asyncHandler(async (req, res) => {
 
-    return res.json({
-      success: true,
-      data: wishes,
-    });
+  const wishes = await Wish.find().sort({ createdAt: -1 });
 
-  } catch (error) {
+  res.status(200).json({
+    success: true,
+    data: wishes,
+  });
 
-    console.log("GET ERROR:", error);
-
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+});
 
 module.exports = {
   createWish,
