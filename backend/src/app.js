@@ -28,11 +28,11 @@ app.get('/api/test', (req, res) => {
 
 // ⭐ GLOBAL ERROR HANDLER (ต้องอยู่ล่างสุดเสมอ)
 app.use((err, req, res, next) => {
-  console.error("GLOBAL ERROR:", err);
+  console.error("🔥 GLOBAL ERROR:", err);
 
   res.status(500).json({
     success: false,
-    message: err.message || "Server crash"
+    message: err.message || "Server crash",
   });
 });
 
