@@ -10,12 +10,13 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'API running',
+    message: 'Wedding Wish Wall API is running',
   });
 });
 
 app.use('/api/wishes', wishRoutes);
 
+// GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:", err);
 
